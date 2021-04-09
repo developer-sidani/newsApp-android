@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Settings">
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notifications:"
+        android:textColor="@color/purple_500"
+        android:textSize="32dp" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        />
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/rd_on"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="changeNotification"
+                android:text="On" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            />
+
+            <RadioButton
+                android:id="@+id/rd_off"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="changeNotification"
+                android:text="Off" />
+            <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            />
+            <RadioButton
+                android:id="@+id/rd_custom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="changeNotification"
+                android:text="Custom" />
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+        />
+    </RadioGroup>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
+        android:entries="@array/items"
+        android:id="@+id/selection_spinner"
+        android:prompt="@string/sp_prompt"
+        />
+
+
+</LinearLayout>
