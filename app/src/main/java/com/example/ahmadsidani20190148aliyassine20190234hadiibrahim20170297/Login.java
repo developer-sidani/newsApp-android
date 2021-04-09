@@ -63,6 +63,7 @@ public class Login extends AppCompatActivity {
                 } else {
                     w2.setText("");
                 }
+                //hi there i am hadi ibrahim
 
 
                 if(w1.getText().toString().equals("")&&w2.getText().toString().equals("")&&!password.getText().toString().equals("")) {
