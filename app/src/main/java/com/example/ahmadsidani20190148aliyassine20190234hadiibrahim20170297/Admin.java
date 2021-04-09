@@ -110,11 +110,11 @@ public class Admin extends AppCompatActivity {
                 }
 
             if (check == true){
-
-
-        save(s_title, s_spinner, s_description,s_keywords,currentDateTime);
-
-
+                s.setSelection(0);
+                title.setText("");
+                description.setText("");
+                keywords.setText("");
+                save(s_title, s_spinner, s_description,s_keywords,currentDateTime,v);
 
             }
 
@@ -123,7 +123,7 @@ public class Admin extends AppCompatActivity {
 }
 
 
-    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime)
+    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime,View v)
     {
 
 
@@ -133,8 +133,8 @@ public class Admin extends AppCompatActivity {
         news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime);
         ref.child(String.valueOf(maxid+1)).setValue(c);
 
-//        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-//        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
 
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
