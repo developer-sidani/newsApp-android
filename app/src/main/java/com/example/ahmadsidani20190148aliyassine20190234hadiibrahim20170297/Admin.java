@@ -15,11 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -130,8 +133,32 @@ public class Admin extends AppCompatActivity {
         ref.child(String.valueOf(maxid+1)).setValue(c);
 
         Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finish();
+        Toast.makeText(this, "News Added Successfully", Toast.LENGTH_SHORT).show();
+        HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
+        handlerThread.start();
+        Handler handler = new Handler(handlerThread.getLooper());
+        Handler mainHandler = new Handler(Admin.this.getMainLooper());
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                mainHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(intent);
+                        finish();
+
+                    }
+                });
+                handler.getLooper().quit();
+            }
+        };
+        handler.post(runnable);
+
 
     }
 
