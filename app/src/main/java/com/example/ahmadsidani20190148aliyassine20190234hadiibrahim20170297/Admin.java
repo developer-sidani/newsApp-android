@@ -62,6 +62,10 @@ public class Admin extends AppCompatActivity {
                 keywords.setError("Enter keywords");
             }
 
+//            if(s_keywords.equals("")){
+//                keywords.setError("Enter keywords");
+//            }
+
 
 //                System.out.println(s_title);
 //                System.out.println(s_description);
