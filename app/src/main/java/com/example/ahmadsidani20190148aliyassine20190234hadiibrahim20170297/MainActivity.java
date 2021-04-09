@@ -15,9 +15,13 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+
+
+
 //finish(); is a function to close the activity before moving on to another activity (if needed)
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
