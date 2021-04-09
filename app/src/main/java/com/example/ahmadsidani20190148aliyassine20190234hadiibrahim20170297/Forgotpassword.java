@@ -1,20 +1,26 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class Forgotpassword extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,7 @@ public class Forgotpassword extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
     public void resetPassword(View v, TextView w1, EditText fp_email){
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         if(fp_email.getText().toString().equals("")){
             w1.setText("Empty Field!!!");
         }else if(!isEmailValid(fp_email.getText().toString())){
@@ -51,6 +58,16 @@ public class Forgotpassword extends AppCompatActivity {
             w1.setText("");
             InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+            auth.sendPasswordResetEmail(fp_email.getText().toString()
+            )
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "Email sent.");
+                            }
+                        }
+                    });
             Snackbar.make(v, "Please Check your Email!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
             Intent intent =new Intent(this,Login.class);
             HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
