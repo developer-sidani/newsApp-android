@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
-    String[] auth={"asidani88@gmail.com","sidani"};
     private static final String TAG = "EmailPassword";
     private FirebaseAuth mAuth;
     @Override
