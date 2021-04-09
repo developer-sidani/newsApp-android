@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -95,7 +96,7 @@ public class Admin extends AppCompatActivity {
             if (check == true){
 
 
-        save(s_title, s_spinner, s_description,s_keywords,currentDateTime);
+        save(s_title, s_spinner, s_description,s_keywords,currentDateTime,v);
 
 
 
@@ -106,7 +107,7 @@ public class Admin extends AppCompatActivity {
 }
 
 
-    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime)
+    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime,View v)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("news");
@@ -131,8 +132,10 @@ public class Admin extends AppCompatActivity {
 
         news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime);
         ref.child(String.valueOf(maxid+1)).setValue(c);
-
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
         Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, "News Added Successfully", Toast.LENGTH_SHORT).show();
         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
         handlerThread.start();
