@@ -60,6 +60,24 @@ public class Admin extends AppCompatActivity {
         TextView keywords = (TextView) findViewById(R.id.keywords);
 
 
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists() ){
+
+                    maxid = (snapshot.getChildrenCount());
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     Button add = (Button) findViewById(R.id.addbutton);
         add.setOnClickListener(new View.OnClickListener() {
@@ -74,8 +92,6 @@ public class Admin extends AppCompatActivity {
             String s_spinner = s.getSelectedItem().toString();
             String currentDateTime= Calendar.getInstance().getTime().toString();
 
-
-            System.out.println(currentDateTime);
             boolean check = true;
 
                 if (s_title.equals("")) {
@@ -96,7 +112,7 @@ public class Admin extends AppCompatActivity {
             if (check == true){
 
 
-        save(s_title, s_spinner, s_description,s_keywords,currentDateTime,v);
+        save(s_title, s_spinner, s_description,s_keywords,currentDateTime);
 
 
 
@@ -107,33 +123,19 @@ public class Admin extends AppCompatActivity {
 }
 
 
-    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime,View v)
+    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime)
     {
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("news");
 
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists() ){
-
-                    maxid = (snapshot.getChildrenCount());
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
         news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime);
         ref.child(String.valueOf(maxid+1)).setValue(c);
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+
+//        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+//        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         Toast.makeText(this, "News Added Successfully", Toast.LENGTH_SHORT).show();
@@ -141,6 +143,7 @@ public class Admin extends AppCompatActivity {
         handlerThread.start();
         Handler handler = new Handler(handlerThread.getLooper());
         Handler mainHandler = new Handler(Admin.this.getMainLooper());
+
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
