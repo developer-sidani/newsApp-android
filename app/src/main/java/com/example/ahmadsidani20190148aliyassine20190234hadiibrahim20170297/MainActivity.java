@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -15,9 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 //finish(); is a function to close the activity before moving on to another activity (if needed)
 public class MainActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -26,9 +30,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        if(currentUser != null){
+            getMenuInflater().inflate(R.menu.menu_admin, menu);
+            return true;
+        }else{
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+            return true;
+        }
+
     }
 
     @Override
@@ -44,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }else if(id == R.id.action_login){
             Intent intent = new Intent(this,Login.class);
+            startActivity(intent);
+        }
+        else if(id==R.id.action_logout){
+            FirebaseAuth.getInstance().signOut();
+            Intent intent=new Intent(this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }else if(id==R.id.action_addnews){
+            Intent intent =new Intent(this,Admin.class);
             startActivity(intent);
         }
 

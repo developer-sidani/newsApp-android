@@ -93,7 +93,8 @@ public class Login extends AppCompatActivity {
                                         signin.setVisibility(View.INVISIBLE);
                                         pb.setVisibility(View.VISIBLE);
 
-                                        Intent intent =new Intent(getApplication(),Admin.class);
+                                        Intent intent =new Intent(getApplication(),MainActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
                                         handlerThread.start();
                                         Handler handler = new Handler(handlerThread.getLooper());
