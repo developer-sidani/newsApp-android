@@ -1,11 +1,13 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -13,12 +15,23 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
     String[] auth={"asidani88@gmail.com","sidani"};
+    private static final String TAG = "EmailPassword";
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         EditText email = (EditText) findViewById(R.id.email);
@@ -63,60 +76,64 @@ public class Login extends AppCompatActivity {
                 } else {
                     w2.setText("");
                 }
-                //hi there i am hadi ibrahim
 
 
                 if(w1.getText().toString().equals("")&&w2.getText().toString().equals("")&&!password.getText().toString().equals("")) {
                     // Good To Go now we need to authenticate
+                    mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
+                            .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Log.d(TAG, "signInWithEmail:success");
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        updateUI(user);
+                                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                                        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+                                        signin.setVisibility(View.INVISIBLE);
+                                        pb.setVisibility(View.VISIBLE);
 
-                    if (email.getText().toString().equals(auth[0]) && password.getText().toString().equals(auth[1])) {
-
-                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
-                        signin.setVisibility(View.INVISIBLE);
-                        pb.setVisibility(View.VISIBLE);
-
-                        Intent intent =new Intent(getApplication(),Admin.class);
-                        HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
-                        handlerThread.start();
-                        Handler handler = new Handler(handlerThread.getLooper());
-                        Handler mainHandler = new Handler(Login.this.getMainLooper());
-                        Runnable runnable = new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                mainHandler.post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startActivity(intent);
-                                        email.setText("");
-                                        password.setText("");
-                                        pb.setVisibility(View.INVISIBLE);
-                                        signin.setVisibility(View.VISIBLE);
-                                        finish();
+                                        Intent intent =new Intent(getApplication(),Admin.class);
+                                        HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
+                                        handlerThread.start();
+                                        Handler handler = new Handler(handlerThread.getLooper());
+                                        Handler mainHandler = new Handler(Login.this.getMainLooper());
+                                        Runnable runnable = new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                try {
+                                                    Thread.sleep(3000);
+                                                } catch (InterruptedException e) {
+                                                    e.printStackTrace();
+                                                }
+                                                mainHandler.post(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        startActivity(intent);
+                                                        email.setText("");
+                                                        password.setText("");
+                                                        pb.setVisibility(View.INVISIBLE);
+                                                        signin.setVisibility(View.VISIBLE);
+                                                        finish();
 
 
+                                                    }
+                                                });
+                                                handler.getLooper().quit();
+                                            }
+                                        };
+                                        handler.post(runnable);
+
+                                    } else {
+                                        // If sign in fails, display a message to the user.
+                                        Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                        Snackbar.make(v, "Incorrect Email or Password!!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                        updateUI(null);
                                     }
-                                });
-                                handler.getLooper().quit();
-                            }
-                        };
-                        handler.post(runnable);
-
-
-
-
-                    } else {
-                        Snackbar.make(v, "Incorrect Email or Password!!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                    }
+                                }
+                            });
                 }
-
-//                Intent intent = new Intent(getApplication(), Admin.class);
-//                startActivity(intent);
 
             }
         });
@@ -131,4 +148,7 @@ public class Login extends AppCompatActivity {
         public boolean isEmailValid(CharSequence email) {
             return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
         }
+    private void updateUI(FirebaseUser user) {
+
+    }
 }
