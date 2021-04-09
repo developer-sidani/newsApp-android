@@ -1,9 +1,10 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.text.InputType;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -12,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.google.android.material.snackbar.Snackbar;
 
 public class Login extends AppCompatActivity {
@@ -69,15 +69,44 @@ public class Login extends AppCompatActivity {
                     // Good To Go now we need to authenticate
 
                     if (email.getText().toString().equals(auth[0]) && password.getText().toString().equals(auth[1])) {
-                        email.setText("");
-                        password.setText("");
+
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
                         signin.setVisibility(View.INVISIBLE);
                         pb.setVisibility(View.VISIBLE);
-//                        pb.setVisibility(View.INVISIBLE);
-//                        signin.setVisibility(View.VISIBLE);
-//                        forgotPassword(v);
+
+                        Intent intent =new Intent(getApplication(),Admin.class);
+                        HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
+                        handlerThread.start();
+                        Handler handler = new Handler(handlerThread.getLooper());
+                        Handler mainHandler = new Handler(Login.this.getMainLooper());
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                mainHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivity(intent);
+                                        email.setText("");
+                                        password.setText("");
+                                        pb.setVisibility(View.INVISIBLE);
+                                        signin.setVisibility(View.VISIBLE);
+                                        finish();
+
+
+                                    }
+                                });
+                                handler.getLooper().quit();
+                            }
+                        };
+                        handler.post(runnable);
+
+
 
 
                     } else {
