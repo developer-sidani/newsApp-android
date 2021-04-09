@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AhmadSidani20190148AliYassine20190234HadiIbrahim20170297">
+        <activity
+            android:name=".Admin"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.AhmadSidani20190148AliYassine20190234HadiIbrahim20170297.NoActionBar"></activity>
         <activity android:name=".Forgotpassword">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,14 +20,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Settings" >
+        <activity android:name=".Settings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login" >
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

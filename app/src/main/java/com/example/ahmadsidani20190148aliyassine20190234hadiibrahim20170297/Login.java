@@ -84,6 +84,10 @@ public class Login extends AppCompatActivity {
                         Snackbar.make(v, "Incorrect Email or Password!!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                     }
                 }
+
+//                Intent intent = new Intent(getApplication(), Admin.class);
+//                startActivity(intent);
+
             }
         });
     }
