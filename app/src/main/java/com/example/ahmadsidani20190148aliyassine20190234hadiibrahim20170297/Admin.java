@@ -5,6 +5,9 @@ import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,11 +38,22 @@ public class Admin extends AppCompatActivity {
     TextView description;
     TextView keywords;
     Spinner s;
+    String email;
     long maxid = 0;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            for (UserInfo profile : user.getProviderData()) {
+
+                 email = profile.getEmail();
+
+            }
+        }
+
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("news");
@@ -114,7 +128,7 @@ public class Admin extends AppCompatActivity {
                 title.setText("");
                 description.setText("");
                 keywords.setText("");
-                save(s_title, s_spinner, s_description,s_keywords,currentDateTime,v);
+                save(s_title, s_spinner, s_description,s_keywords,currentDateTime,email,v);
 
             }
 
@@ -123,14 +137,15 @@ public class Admin extends AppCompatActivity {
 }
 
 
-    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime,View v)
+    public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime,String admin, View v)
     {
+
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("news");
 
-        news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime);
+        news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime, admin);
         ref.child(String.valueOf(maxid+1)).setValue(c);
 
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);

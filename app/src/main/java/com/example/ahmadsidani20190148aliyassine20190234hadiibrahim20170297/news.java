@@ -14,11 +14,16 @@ public class news {
     public String description;
     public String keyword;
     public String date;
+    public String admin;
     public Boolean isactive;
     public int likes;
 
 
-    public news(long id,String category, String title, String description, String keyword, String date) {
+    public  news(){
+
+    }
+
+    public news(long id,String category, String title, String description, String keyword, String date, String admin) {
 
         this.id = id;
         this.category= category;
@@ -26,18 +31,29 @@ public class news {
         this.description = description;
         this.keyword = keyword;
         this.date = date;
+        this.admin=admin;
         this.isactive=true;
         this.likes=0;
+
     }
-    public news( String category, String title, String description, String keyword, String date) {
+    public news( String category, String title, String description, String keyword, String date, String admin) {
 
         this.title = title;
         this.category= category;
         this.description = description;
         this.keyword = keyword;
         this.date = date;
+        this.admin=admin;
         this.isactive=true;
         this.likes=0;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
     }
 
     public void setCategory(String category) {
