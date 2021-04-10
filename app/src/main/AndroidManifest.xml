@@ -12,7 +12,13 @@
         <activity
             android:name=".Admin"
             android:label="@string/title_activity_admin"
-            android:theme="@style/Theme.AhmadSidani20190148AliYassine20190234HadiIbrahim20170297.NoActionBar"></activity>
+            android:theme="@style/Theme.AhmadSidani20190148AliYassine20190234HadiIbrahim20170297.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Forgotpassword">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

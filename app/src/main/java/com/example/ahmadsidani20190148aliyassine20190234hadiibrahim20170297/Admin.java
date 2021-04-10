@@ -48,9 +48,7 @@ public class Admin extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             for (UserInfo profile : user.getProviderData()) {
-
                  email = profile.getEmail();
-
             }
         }
 
@@ -79,11 +77,8 @@ public class Admin extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (snapshot.exists() ){
-
                     maxid = (snapshot.getChildrenCount());
-
                 }
-
             }
 
             @Override
@@ -96,10 +91,8 @@ public class Admin extends AppCompatActivity {
     Button add = (Button) findViewById(R.id.addbutton);
         add.setOnClickListener(new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-
-
-
+        public void onClick(View v)
+        {
             String s_title = title.getText().toString();
             String s_description = description.getText().toString();
             String s_keywords = keywords.getText().toString();
