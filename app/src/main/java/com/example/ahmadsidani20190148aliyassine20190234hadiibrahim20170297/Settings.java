@@ -1,8 +1,10 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.Spinner;
@@ -23,5 +25,10 @@ public class Settings extends AppCompatActivity {
         }else {
             sp.setEnabled(false);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 }
