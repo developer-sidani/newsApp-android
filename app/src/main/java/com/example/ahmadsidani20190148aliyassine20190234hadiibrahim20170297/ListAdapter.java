@@ -36,6 +36,34 @@ public class ListAdapter extends ArrayAdapter  {
         news n=newsList.get(position);
         titleTextView.setText(n.getTitle());
         descriptionTextView.setText(n.getCategory());
+
+
+        if(n.getCategory().equals("Breaking News")){
+//            newsImage.setImageResource(R.mipmap.breaking_news_round);
+        }
+        else if(n.getCategory().equals("Health")){
+            newsImage.setImageResource(R.drawable.health);
+        }
+        else if(n.getCategory().equals("Sports")){
+            newsImage.setImageResource(R.drawable.sports);
+        }
+        else if(n.getCategory().equals("Technology")){
+            newsImage.setImageResource(R.drawable.technology);
+        }
+        else if(n.getCategory().equals("Travel")){
+            //okay
+            newsImage.setImageResource(R.drawable.travel);
+        }
+        else if(n.getCategory().equals("Travel")){
+            newsImage.setImageResource(R.drawable.travel);
+            //okay
+        }
+
+        else{
+            newsImage.setImageResource(R.drawable.ic_launcher_background);
+        }
+
+
         return row;
     }
 }
