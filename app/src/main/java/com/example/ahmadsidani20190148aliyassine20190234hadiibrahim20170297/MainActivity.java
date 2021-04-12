@@ -70,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 newsList.clear();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
-                    newsList.add(0, n);
+                    if(n.isactive==true) {
+                        newsList.add(0, n);
 
-                    ListAdapter adapter = new ListAdapter(MainActivity.this, newsList);
-                    newsListView.setAdapter(adapter);
+                        ListAdapter adapter = new ListAdapter(MainActivity.this, newsList);
+                        newsListView.setAdapter(adapter);
+                    }
 
                 }
             }

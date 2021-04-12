@@ -17,7 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import java.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.view.View;
@@ -83,7 +83,7 @@ public class Admin extends AppCompatActivity {
             String s_description = description.getText().toString();
             String s_keywords = keywords.getText().toString();
             String s_spinner = s.getSelectedItem().toString();
-            String currentDateTime= Calendar.getInstance().getTime().toString();
+            String currentDateTime = new SimpleDateFormat("EEE, h:mm a").format(Calendar.getInstance().getTime());
 
             boolean check = true;
 
