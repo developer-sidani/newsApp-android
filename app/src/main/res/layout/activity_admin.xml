@@ -39,7 +39,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:hint="Description"></EditText>
-
+<!--test-->
     <EditText
         android:id="@+id/keywords"
         android:layout_width="300dp"
