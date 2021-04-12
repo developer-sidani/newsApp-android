@@ -33,10 +33,11 @@
         android:textSize="18dp"
         android:hint="Search"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:gravity="s"
         android:padding="10dip"
         android:id="@+id/search"
         android:background="@drawable/search"
+        android:drawableLeft="@drawable/ic_search"
         />
     <Space
         android:layout_width="wrap_content"
