@@ -19,18 +19,23 @@
 
 
     <EditText
+        android:background="@drawable/search"
         android:id="@+id/title"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
+        android:padding="7dp"
         android:hint="Title"
         ></EditText>
 
     <EditText
+        android:padding="7dp"
+        android:gravity="start"
+        android:background="@drawable/search"
         android:id="@+id/description"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
         android:hint="Description"></EditText>
@@ -41,6 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
+        android:padding="7dp"
+        android:background="@drawable/search"
         android:hint="Keywords"></EditText>
 
     <Spinner
