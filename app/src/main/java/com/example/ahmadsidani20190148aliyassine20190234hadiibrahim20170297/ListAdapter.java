@@ -31,11 +31,13 @@ public class ListAdapter extends ArrayAdapter  {
         View row=inflater.inflate(R.layout.row,null,true);
         TextView titleTextView=row.findViewById(R.id.titleTextView);
         TextView descriptionTextView=row.findViewById(R.id.descriptionTextView);
+        TextView dateTextView=row.findViewById(R.id.dateTextView);
         ImageView newsImage= row.findViewById(R.id.newsImage);
 
         news n=newsList.get(position);
         titleTextView.setText(n.getTitle());
-        descriptionTextView.setText(n.getCategory());
+        dateTextView.setText(n.getDate());
+        descriptionTextView.setText(n.getDescription());
 
 
         if(n.getCategory().equals("Breaking News")){
