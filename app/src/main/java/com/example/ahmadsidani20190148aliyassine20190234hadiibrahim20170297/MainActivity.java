@@ -14,8 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +25,11 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 //finish(); is a function to close the activity before moving on to another activity (if needed)
@@ -34,54 +37,44 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
-
+    ListView newsListView;
+    List<news> newsList;
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         mAuth = FirebaseAuth.getInstance();
         Log.d(TAG, "Subscribing to weather topic");
-        // [START subscribe_topics]
-        FirebaseMessaging.getInstance().subscribeToTopic("news")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        String msg = getString(R.string.action_login);
-                        if (!task.isSuccessful()) {
-                            msg = getString(R.string.action_logout);
-                        }
-                        Log.d(TAG, msg);
-                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference("news");
 
-        ref.addChildEventListener(new ChildEventListener() {
+        newsListView=(ListView)findViewById(R.id.newsListView);
+        newsList=new ArrayList<>();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        ref = database.getReference("news");
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-                news c = dataSnapshot.getValue(news.class);
-                System.out.println("Title: " + c.title);
-//                System.out.println("Title: " + newPost.title);
-                System.out.println("Previous Post ID: " + prevChildKey);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                newsList.clear();
+                for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()){
+                    news n=newsSnapshot.getValue(news.class);
+                    newsList.add(n);
+                }
+
+                ListAdapter adapter=new ListAdapter(MainActivity.this,newsList );
+                newsListView.setAdapter(adapter);
+
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String prevChildKey) {}
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
         });
 
     }
