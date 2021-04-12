@@ -38,7 +38,7 @@
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="180dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:text="date" />
     </LinearLayout>

@@ -28,7 +28,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -84,9 +83,8 @@ public class Admin extends AppCompatActivity {
             String s_description = description.getText().toString();
             String s_keywords = keywords.getText().toString();
             String s_spinner = s.getSelectedItem().toString();
-//            String currentDateTime= Calendar.getInstance().getTime().toString();
-//            String currentDateTime= new SimpleDateFormat("EEE, h:mm a").toString();
-            String currentDateTime = new SimpleDateFormat("EEE, h:mm a").format(Calendar.getInstance().getTime());
+            String currentDateTime= Calendar.getInstance().getTime().toString();
+
             boolean check = true;
 
                 if (s_title.equals("")) {
