@@ -6,17 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -39,34 +33,11 @@ public class ListAdapter extends ArrayAdapter  {
         TextView descriptionTextView=row.findViewById(R.id.descriptionTextView);
         TextView dateTextView=row.findViewById(R.id.dateTextView);
         ImageView newsImage= row.findViewById(R.id.newsImage);
-        CheckBox like = row.findViewById(R.id.like);
 
-
-       news n=newsList.get(position);
-//        long temp_id = n.getId();
-//        int id = (int) temp_id;
+        news n=newsList.get(position);
         titleTextView.setText(n.getTitle());
         dateTextView.setText(n.getDate());
         descriptionTextView.setText(n.getDescription());
-
-
-//
-//
-//like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//    @Override
-//    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//
-//
-//        if (like.isChecked()) {
-//System.out.println(id);
-//
-//        }
-//        else{
-//
-//
-//        }
-//    }
-//});
 
 
         if(n.getCategory().equals("Breaking News")){

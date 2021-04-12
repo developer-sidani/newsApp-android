@@ -19,8 +19,6 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-
-
     <style name="Theme.AhmadSidani20190148AliYassine20190234HadiIbrahim20170297.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.AhmadSidani20190148AliYassine20190234HadiIbrahim20170297.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
