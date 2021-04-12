@@ -12,10 +12,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -25,6 +27,7 @@ import android.view.MenuItem;
 
 //finish(); is a function to close the activity before moving on to another activity (if needed)
 public class MainActivity extends AppCompatActivity {
+
     private FirebaseAuth mAuth;
 
 
@@ -104,4 +107,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
