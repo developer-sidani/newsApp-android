@@ -61,7 +61,7 @@ public class Admin extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String[] spinnerContents = {"Breaking", "Local", "Global", "Finance", "Sports", "Technology"};
+        String[] spinnerContents = {"Breaking News","Local", "Global", "Politics",  "Economics", "Health", "Sports", "Technology"};
         Spinner s = (Spinner) findViewById(R.id.category);
 
         ArrayAdapter<String> myadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, spinnerContents);
