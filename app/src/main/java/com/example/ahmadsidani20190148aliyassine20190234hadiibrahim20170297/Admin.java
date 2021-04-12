@@ -55,7 +55,6 @@ public class Admin extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("news");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -158,8 +157,8 @@ public class Admin extends AppCompatActivity {
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
 
-                        Intent intent = new Intent(getApplication(), MainActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        Intent intent = new Intent(getApplication(), MainActivity.class);
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         Toast.makeText(getApplication(), "News Added Successfully", Toast.LENGTH_SHORT).show();
                         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
                         handlerThread.start();
@@ -177,7 +176,6 @@ public class Admin extends AppCompatActivity {
                                 mainHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startActivity(intent);
                                         finish();
 
                                     }

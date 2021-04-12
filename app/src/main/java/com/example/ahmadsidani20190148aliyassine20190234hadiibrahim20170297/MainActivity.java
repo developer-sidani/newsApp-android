@@ -51,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         mAuth = FirebaseAuth.getInstance();
-        Log.d(TAG, "Subscribing to weather topic");
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("news");
+        scoresRef.keepSynced(true);
+
+//        DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
+//        newssRef.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -70,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 newsList.clear();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
-                    if(n.isactive==true) {
+                    if(n.isactive) {
                         newsList.add(0, n);
 
                         ListAdapter adapter = new ListAdapter(MainActivity.this, newsList);
