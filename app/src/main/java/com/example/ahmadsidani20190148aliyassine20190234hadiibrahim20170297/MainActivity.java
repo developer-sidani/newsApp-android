@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("news");
         scoresRef.keepSynced(true);
 
-//        DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
-//        newssRef.keepSynced(true);
+        DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
+        newssRef.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
