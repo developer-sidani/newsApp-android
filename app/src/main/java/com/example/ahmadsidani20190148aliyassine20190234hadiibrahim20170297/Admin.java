@@ -72,20 +72,6 @@ public class Admin extends AppCompatActivity {
         TextView keywords = (TextView) findViewById(R.id.keywords);
 
 
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists() ){
-                    maxid = (snapshot.getChildrenCount());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
     Button add = (Button) findViewById(R.id.addbutton);
@@ -132,38 +118,75 @@ public class Admin extends AppCompatActivity {
     public void save(String s_title, String s_spinner, String s_description, String s_keywords, String currentDateTime,String admin, View v)
     {
 
-
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference("news");
 
-        news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime, admin);
-        ref.child(String.valueOf(maxid+1)).setValue(c);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+                if (snapshot.exists() ){
+                    maxid = (snapshot.getChildrenCount());
+                }
+            }
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        Toast.makeText(this, "News Added Successfully", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
         handlerThread.start();
         Handler handler = new Handler(handlerThread.getLooper());
         Handler mainHandler = new Handler(Admin.this.getMainLooper());
-
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 mainHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        startActivity(intent);
-                        finish();
+
+                        news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime, admin);
+                        ref.child(String.valueOf(maxid+1)).setValue(c);
+
+                        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+
+                        Intent intent = new Intent(getApplication(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        Toast.makeText(getApplication(), "News Added Successfully", Toast.LENGTH_SHORT).show();
+                        HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
+                        handlerThread.start();
+                        Handler handler = new Handler(handlerThread.getLooper());
+                        Handler mainHandler = new Handler(Admin.this.getMainLooper());
+
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(2000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                mainHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startActivity(intent);
+                                        finish();
+
+                                    }
+                                });
+                                handler.getLooper().quit();
+                            }
+                        };
+                        handler.post(runnable);
+
 
                     }
                 });
@@ -175,4 +198,7 @@ public class Admin extends AppCompatActivity {
 
     }
 
-}
+
+
+    }
+

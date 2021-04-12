@@ -1,6 +1,9 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -15,10 +18,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.events.Subscriber;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
 
 import android.util.Log;
 import android.view.View;
@@ -28,6 +33,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.nio.channels.Channel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
+
         newsListView=(ListView)findViewById(R.id.newsListView);
         newsList=new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -61,16 +68,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 newsList.clear();
-                for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()){
-                    news n=newsSnapshot.getValue(news.class);
-                    newsList.add(0,n);
+                for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
+                    news n = newsSnapshot.getValue(news.class);
+                    newsList.add(0, n);
+
+                    ListAdapter adapter = new ListAdapter(MainActivity.this, newsList);
+                    newsListView.setAdapter(adapter);
+
                 }
-
-                ListAdapter adapter=new ListAdapter(MainActivity.this,newsList );
-                newsListView.setAdapter(adapter);
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
