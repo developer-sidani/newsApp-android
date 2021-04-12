@@ -6,8 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 
 public class Settings extends AppCompatActivity {
 
@@ -15,20 +18,19 @@ public class Settings extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Spinner sp= (Spinner)findViewById(R.id.selection_spinner);
-        sp.setEnabled(false);
-    }
-    public void changeNotification(View v){
-        Spinner sp= (Spinner)findViewById(R.id.selection_spinner);
-        if(v.getId()==R.id.rd_custom){
-            sp.setEnabled(true);
-        }else {
-            sp.setEnabled(false);
-        }
-    }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState, @NonNull PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+        LinearLayout mylin=(LinearLayout)findViewById(R.id.spinnerlinear);
+        Switch myswitch=(Switch)findViewById(R.id.myswitch);
+
+        myswitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(myswitch.isChecked()){
+                    mylin.setVisibility(View.VISIBLE);
+                }else{
+                    mylin.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
     }
 }

@@ -122,7 +122,6 @@ public class Admin extends AppCompatActivity {
                 description.setText("");
                 keywords.setText("");
                 save(s_title, s_spinner, s_description,s_keywords,currentDateTime,email,v);
-
             }
 
         }

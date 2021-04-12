@@ -7,6 +7,7 @@
     <string name="forgot_password"><u>Forgot Password</u></string>
     <string name="sp_prompt">News Type:</string>
     <string-array name="items">
+        <item>All News</item>
         <item>Breaking News</item>
         <item>Local</item>
         <item>Global</item>
