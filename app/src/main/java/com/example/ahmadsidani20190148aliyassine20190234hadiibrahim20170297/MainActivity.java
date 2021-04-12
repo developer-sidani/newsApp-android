@@ -3,6 +3,8 @@ package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
@@ -13,7 +15,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,18 +26,34 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.Toast;
 
 
 //finish(); is a function to close the activity before moving on to another activity (if needed)
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private static final String TAG = "MainActivity";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         mAuth = FirebaseAuth.getInstance();
+        Log.d(TAG, "Subscribing to weather topic");
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = getString(R.string.action_login);
+                        if (!task.isSuccessful()) {
+                            msg = getString(R.string.action_logout);
+                        }
+                        Log.d(TAG, msg);
+                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
