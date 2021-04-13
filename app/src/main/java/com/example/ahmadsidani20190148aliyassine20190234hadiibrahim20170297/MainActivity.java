@@ -109,10 +109,13 @@ String temp = s.toString();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
                     if(n.isactive) {
-                        if (n.title.indexOf(temp) >= 0 || n.description.indexOf(temp) >= 0) {
+                        if (n.title.indexOf(temp) >= 0 || n.description.indexOf(temp) >= 0 || n.keyword.indexOf(temp) >= 0) {
 
                             newsList.add(0, n);
-
+                            adapter = new ListAdapter(MainActivity.this, newsList);
+                            newsListView.setAdapter(adapter);
+                        }else {
+                            newsList.clear();
                             adapter = new ListAdapter(MainActivity.this, newsList);
                             newsListView.setAdapter(adapter);
                         }
