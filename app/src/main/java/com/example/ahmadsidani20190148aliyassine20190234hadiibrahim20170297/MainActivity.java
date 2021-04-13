@@ -151,9 +151,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(id==R.id.action_logout){
             FirebaseAuth.getInstance().signOut();
-            Intent intent=new Intent(this,MainActivity.class);
-            startActivity(intent);
-            finish();
+            invalidateOptionsMenu();
+//            Intent intent=new Intent(this,MainActivity.class);
+//            startActivity(intent);
+//            finish();
         }else if(id==R.id.action_addnews){
             Intent intent =new Intent(this,Admin.class);
             startActivity(intent);

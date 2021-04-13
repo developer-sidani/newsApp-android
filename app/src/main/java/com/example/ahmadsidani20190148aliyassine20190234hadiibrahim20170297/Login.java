@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity {
                                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
                                         signin.setVisibility(View.INVISIBLE);
                                         pb.setVisibility(View.VISIBLE);
-                                        Snackbar.make(v, "Logged In", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                        Snackbar.make(v, "Logged In Successfully", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                         Intent intent =new Intent(getApplication(),MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
@@ -110,12 +110,10 @@ public class Login extends AppCompatActivity {
                                                 mainHandler.post(new Runnable() {
                                                     @Override
                                                     public void run() {
-
-                                                        startActivity(intent);
-                                                        email.setText("");
-                                                        password.setText("");
-                                                        pb.setVisibility(View.INVISIBLE);
-                                                        signin.setVisibility(View.VISIBLE);
+//                                                        email.setText("");
+//                                                        password.setText("");
+//                                                        pb.setVisibility(View.INVISIBLE);
+//                                                        signin.setVisibility(View.VISIBLE);
                                                         finish();
 
 
