@@ -1,40 +1,27 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.events.Subscriber;
-import com.google.firebase.messaging.FirebaseMessaging;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
 
-import android.util.Log;
-import android.view.View;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.nio.channels.Channel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     ListView newsListView;
     List<news> newsList;
     DatabaseReference ref;
-
+    EditText search;
+    ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("news");
 
+         adapter = new ListAdapter(MainActivity.this, newsList);
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -76,9 +66,10 @@ public class MainActivity extends AppCompatActivity {
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
                     if(n.isactive) {
+
                         newsList.add(0, n);
 
-                        ListAdapter adapter = new ListAdapter(MainActivity.this, newsList);
+                         adapter = new ListAdapter(MainActivity.this, newsList);
                         newsListView.setAdapter(adapter);
                     }
 
@@ -89,6 +80,43 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+
+
+        EditText search = findViewById(R.id.search);
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s);
+//                adapter.get
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+            search.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    (MainActivity.this).adapter.getFilter().filter(s);
+                    newsListView.setAdapter(adapter);
+                    Toast.makeText(MainActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
 
     }
 
@@ -133,5 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
