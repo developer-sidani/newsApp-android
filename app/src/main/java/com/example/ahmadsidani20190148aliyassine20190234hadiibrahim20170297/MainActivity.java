@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -54,12 +55,12 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        newsListView=(ListView)findViewById(R.id.newsListView);
-        newsList=new ArrayList<>();
+        newsListView = (ListView) findViewById(R.id.newsListView);
+        newsList = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("news");
 
-         adapter = new ListAdapter(MainActivity.this, newsList);
+        adapter = new ListAdapter(MainActivity.this, newsList);
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,16 +68,17 @@ public class MainActivity extends AppCompatActivity {
                 newsList.clear();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
-                    if(n.isactive) {
+                    if (n.isactive) {
 
                         newsList.add(0, n);
 
-                         adapter = new ListAdapter(MainActivity.this, newsList);
+                        adapter = new ListAdapter(MainActivity.this, newsList);
                         newsListView.setAdapter(adapter);
                     }
 
                 }
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
@@ -85,41 +87,49 @@ public class MainActivity extends AppCompatActivity {
 
 
         EditText search = findViewById(R.id.search);
-        search.addTextChangedListener(new TextWatcher() {
+search.addTextChangedListener(new TextWatcher() {
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+String temp = s.toString();
+
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                newsList.clear();
+                for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
+                    news n = newsSnapshot.getValue(news.class);
+                    if(n.isactive) {
+                        if (n.title.indexOf(temp) >= 0 || n.description.indexOf(temp) >= 0) {
+
+                            newsList.add(0, n);
+
+                            adapter = new ListAdapter(MainActivity.this, newsList);
+                            newsListView.setAdapter(adapter);
+                        }
+                    }
+                }
             }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.getFilter().filter(s);
-//                adapter.get
-            }
-            @Override
-            public void afterTextChanged(Editable s) {
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
             }
         });
 
-            search.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                }
+    }
 
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    (MainActivity.this).adapter.getFilter().filter(s);
-                    newsListView.setAdapter(adapter);
-                    Toast.makeText(MainActivity.this, ""+s, Toast.LENGTH_SHORT).show();
-                }
+    @Override
+    public void afterTextChanged(Editable s) {
 
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-
-
-
+    }
+});
     }
 
     @Override
