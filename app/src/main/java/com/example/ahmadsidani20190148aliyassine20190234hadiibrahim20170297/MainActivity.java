@@ -32,20 +32,24 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+
     private static final String TAG = "MainActivity";
     ListView newsListView;
     List<news> newsList;
     DatabaseReference ref;
     EditText search;
+    static boolean calledAlready = false;
     ListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (!calledAlready){
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("news");
-        scoresRef.keepSynced(true);
+
 
         DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
         newssRef.keepSynced(true);
