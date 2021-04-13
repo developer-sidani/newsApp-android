@@ -92,7 +92,6 @@ public class Login extends AppCompatActivity {
                                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
                                         signin.setVisibility(View.INVISIBLE);
                                         pb.setVisibility(View.VISIBLE);
-                                        Snackbar.make(v, "Logged In Successfully", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                         Intent intent =new Intent(getApplication(),MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
@@ -110,10 +109,8 @@ public class Login extends AppCompatActivity {
                                                 mainHandler.post(new Runnable() {
                                                     @Override
                                                     public void run() {
-//                                                        email.setText("");
-//                                                        password.setText("");
-//                                                        pb.setVisibility(View.INVISIBLE);
-//                                                        signin.setVisibility(View.VISIBLE);
+                                                        Toast.makeText(Login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
+                                                        invalidateOptionsMenu();
                                                         finish();
 
 
@@ -137,7 +134,10 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-        public void forgotPassword(View v){
+
+
+
+    public void forgotPassword(View v){
             Intent intent = new Intent(this,Forgotpassword.class);
             EditText email= (EditText)findViewById(R.id.email);
             intent.putExtra("email",email.getText().toString());

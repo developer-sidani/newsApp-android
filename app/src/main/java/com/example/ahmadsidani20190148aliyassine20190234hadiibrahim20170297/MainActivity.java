@@ -3,6 +3,7 @@ package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -18,6 +19,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -133,6 +135,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -152,9 +160,7 @@ public class MainActivity extends AppCompatActivity {
         else if(id==R.id.action_logout){
             FirebaseAuth.getInstance().signOut();
             invalidateOptionsMenu();
-//            Intent intent=new Intent(this,MainActivity.class);
-//            startActivity(intent);
-//            finish();
+            Toast.makeText(this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
         }else if(id==R.id.action_addnews){
             Intent intent =new Intent(this,Admin.class);
             startActivity(intent);
