@@ -4,11 +4,8 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -17,41 +14,30 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-//finish(); is a function to close the activity before moving on to another activity (if needed)
 public class MainActivity extends AppCompatActivity {
     String notitype="All News";
     private FirebaseAuth mAuth;
-
-    CheckBox delete;
     private static final String TAG = "MainActivity";
     ListView newsListView;
     List<news> newsList;
     DatabaseReference ref;
-    EditText search;
     static boolean calledAlready = false;
     static boolean calledAlready2 = false;
     ListAdapter adapter;
@@ -66,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
         if(!switchType){
             notitype="off";
         }
-
-
     }
 
     @Override
@@ -183,7 +167,6 @@ public class MainActivity extends AppCompatActivity {
                         adapter = new ListAdapter(MainActivity.this, newsList);
                         newsListView.setAdapter(adapter);
                     }
-
                 }
             }
 
@@ -204,7 +187,7 @@ search.addTextChangedListener(new TextWatcher() {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-String temp = s.toString();
+        String temp = s.toString();
 
         ref.addValueEventListener(new ValueEventListener() {
 

@@ -40,12 +40,6 @@ import java.util.Calendar;
 
 
 public class Admin extends AppCompatActivity {
-
-    Button add;
-    TextView title;
-    TextView description;
-    TextView keywords;
-    Spinner s;
     String email;
     long maxid = 0;
 
@@ -162,32 +156,7 @@ public class Admin extends AppCompatActivity {
 
                         news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime, admin);
                         ref.child(String.valueOf(maxid+1)).setValue(c);
-                        ref.addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                                notification(s_title,s_description);
-                            }
 
-                            @Override
-                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                            }
-
-                            @Override
-                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
 
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
@@ -229,25 +198,6 @@ public class Admin extends AppCompatActivity {
 
     }
 
-//    private void notification(String title,String text){
-//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-//            NotificationChannel channel=new NotificationChannel("news","news", NotificationManager.IMPORTANCE_DEFAULT);
-//
-//
-//            NotificationManager manager =getSystemService(NotificationManager.class);
-//            manager.createNotificationChannel(channel);
-//
-//        }
-//
-//        NotificationCompat.Builder builder=new NotificationCompat.Builder(this,"news")
-//                .setContentTitle("hello")
-//                .setSmallIcon(R.drawable.ic_notification)
-//                .setAutoCancel(true)
-//                .setContentText("test");
-//
-//        NotificationManagerCompat managerCompat =NotificationManagerCompat.from(this);
-//        managerCompat.notify(999,builder.build());
-//    }
 
 
 
