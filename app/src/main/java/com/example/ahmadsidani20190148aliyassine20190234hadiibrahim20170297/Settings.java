@@ -75,7 +75,6 @@ public class Settings extends AppCompatActivity {
             selection_spinner.setSelection(spinnerValue);
         }
         String s=sharedPref.getString("spinner","All News");
-        Toast.makeText(this, "NEWSTYPE IS ::"+s, Toast.LENGTH_SHORT).show();
 
 
 
