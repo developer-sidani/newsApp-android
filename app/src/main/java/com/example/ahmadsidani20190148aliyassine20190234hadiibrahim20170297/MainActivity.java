@@ -3,6 +3,7 @@ package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -41,7 +42,7 @@ import java.util.List;
 
 //finish(); is a function to close the activity before moving on to another activity (if needed)
 public class MainActivity extends AppCompatActivity {
-
+    String notitype="All News";
     private FirebaseAuth mAuth;
 
     CheckBox delete;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     DatabaseReference ref;
     EditText search;
     static boolean calledAlready = false;
+    static boolean calledAlready2 = false;
     ListAdapter adapter;
 
     @Override
@@ -59,31 +61,86 @@ public class MainActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
         }
-
-
-
-
-
         mAuth = FirebaseAuth.getInstance();
-
-
         DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
         newssRef.keepSynced(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         newsListView = (ListView) findViewById(R.id.newsListView);
         newsList = new ArrayList<>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         ref = database.getReference("news");
+        if (!calledAlready2){
+            ref.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    news n=snapshot.getValue(news.class);
+                    if(notitype.equals("All News")){
+                        notification(n.getTitle(),n.getDescription());
+                    }else if(notitype.equals("Sports")){
+                        if(n.getCategory().equals("Sports")){
+                            notification(n.getTitle(),n.getDescription());
+                        }
+                    }
+                    else if(notitype.equals("Breaking News")){
+                        if(n.getCategory().equals("Breaking News")){
+                            notification(n.getTitle(),n.getDescription());
+                        }
+                    }
+                    else if(notitype.equals("Local")){
+                        if(n.getCategory().equals("Local")){
+                            notification(n.getTitle(),n.getDescription());
+                        }
+                    }
+                    else if(notitype.equals("Global")){
+                        if(n.getCategory().equals("Global")){
+                            notification(n.getTitle(),n.getDescription());
+                        }
+                    }
+                    else if(notitype.equals("Finance")){
+                        if(n.getCategory().equals("Finance")){
+                            notification(n.getTitle(),n.getDescription());
+                        }
+                    }
+                    else if(notitype.equals("Technology")){
+                        if(n.getCategory().equals("Technology")){
+                            notification(n.getTitle(),n.getDescription());
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            calledAlready2 = true;
+        }
 
         adapter = new ListAdapter(MainActivity.this, newsList);
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     newsList.clear();
+
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
                     if (n.isactive) {

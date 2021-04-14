@@ -211,10 +211,7 @@ public class Admin extends AppCompatActivity {
                                 mainHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
                                         finish();
-
                                     }
                                 });
                                 handler.getLooper().quit();
