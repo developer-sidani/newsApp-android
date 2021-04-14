@@ -62,19 +62,22 @@ public class MainActivity extends AppCompatActivity {
         boolean switchType = sharedPrefences.getBoolean("switch",true);
         SharedPreferences sharedPref = getSharedPreferences("FileName",MODE_PRIVATE);
         notitype=sharedPref.getString("spinner","All News");
+        if(!switchType){
+            notitype="off";
+        }
 
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+notitype);
+//        System.out.println("NOTIFICATIONTYPE is "+switchType);
+//        System.out.println("NOTIFICATIONTYPE is "+switchType);
+//        System.out.println("NOTIFICATIONTYPE is "+switchType);
+//        System.out.println("NOTIFICATIONTYPE is "+switchType);
+//        System.out.println("NOTIFICATIONTYPE is "+switchType);
 
         if (!calledAlready){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -96,11 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     news n=snapshot.getValue(news.class);
-
-
-
-
-                    if(switchType){
                         if(notitype.equals("All News")){
                             notification(n.getTitle(),n.getDescription());
                         }else if(notitype.equals("Sports")){
@@ -134,8 +132,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
 
-                    }
-
 
                 }
 
@@ -161,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
             });
             calledAlready2 = true;
         }
+
 
         adapter = new ListAdapter(MainActivity.this, newsList);
         ref.addValueEventListener(new ValueEventListener() {
@@ -238,6 +235,12 @@ String temp = s.toString();
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        recreate();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -250,13 +253,6 @@ String temp = s.toString();
         }
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        invalidateOptionsMenu();
-
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
