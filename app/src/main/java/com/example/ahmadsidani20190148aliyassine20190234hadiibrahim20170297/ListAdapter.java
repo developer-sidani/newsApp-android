@@ -24,6 +24,7 @@ import java.util.List;
 
 public class ListAdapter extends ArrayAdapter  {
     private Activity Context;
+    public  int numLikes;
     List<news>  newsList;
     public ListAdapter(Activity Context,List<news>  newsList){
         super(Context,R.layout.row,newsList);
@@ -61,19 +62,22 @@ public class ListAdapter extends ArrayAdapter  {
                 newssRef.child(tempId).child("isactive").setValue(false);
             }
         });
-//        like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-////                int numLikes=n.getLikes();
-////                if(like.isChecked()){
-////                    newssRef.child(tempId).child("likes").setValue(numLikes++);
-////                }
-////                else{
-////                    newssRef.child(tempId).child("likes").setValue(numLikes--);
-////                }
-//
-//            }
-//        });
+         numLikes=n.getLikes();
+        like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(like.isChecked()){
+                    int temp=numLikes++;
+                    newssRef.child(tempId).child("likes").setValue(temp);
+                }
+                else{
+                    int temp=numLikes--;
+                    newssRef.child(tempId).child("likes").setValue(temp);
+                }
+
+            }
+        });
 
 
         if(n.getCategory().equals("Breaking News")){
