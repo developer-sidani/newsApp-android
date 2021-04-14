@@ -1,8 +1,11 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +31,13 @@ import com.google.firebase.database.ServerValue;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.TimeoutException;
 
 public class ListAdapter extends ArrayAdapter  {
     private DatabaseReference mDatabase;
     private Activity Context;
+    TextView numOfLikes;
 
     FirebaseDatabase firebase;
     private FirebaseAuth mAuth;
@@ -56,7 +62,7 @@ public class ListAdapter extends ArrayAdapter  {
         ImageView newsImage= row.findViewById(R.id.newsImage);
         CheckBox delete=row.findViewById(R.id.delete);
         CheckBox like=row.findViewById(R.id.like);
-        TextView numOfLikes=row.findViewById(R.id.numOfLikes);
+        numOfLikes=row.findViewById(R.id.numOfLikes);
 
         news n=newsList.get(position);
         titleTextView.setText(n.getTitle());
@@ -127,16 +133,33 @@ public class ListAdapter extends ArrayAdapter  {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(like.isChecked()){
                     like.setButtonDrawable(R.drawable.like_gray);
+                    new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    newssRef.child(tempId).child("likes").setValue(ServerValue.increment(1));
+                                }
+                            },
+                            2000
+                    );
+                    like.setChecked(false);
+
+
                 }
                 else{
                     like.setButtonDrawable(R.drawable.like_empty);
+                    new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    newssRef.child(tempId).child("likes").setValue(ServerValue.increment(-1));
+                                }
+                            },
+                            2000
+                    );
+                    like.setChecked(true);
                 }
-
             }
-
-
-
-
         });
 
 
@@ -172,8 +195,7 @@ public class ListAdapter extends ArrayAdapter  {
         else{
             newsImage.setImageResource(R.drawable.ic_launcher_background);
         }
-
-
         return row;
     }
+
 }
