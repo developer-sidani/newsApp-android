@@ -55,6 +55,20 @@ public class MainActivity extends AppCompatActivity {
     static boolean calledAlready = false;
     static boolean calledAlready2 = false;
     ListAdapter adapter;
+    @Override
+    protected void onResume() {
+        super.onResume();
+        invalidateOptionsMenu();
+        SharedPreferences sharedPrefences = getSharedPreferences("News", MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("FileName",MODE_PRIVATE);
+        boolean switchType = sharedPrefences.getBoolean("switch",true);
+        notitype=sharedPref.getString("spinner","All News");
+        if(!switchType){
+            notitype="off";
+        }
+
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,19 +76,10 @@ public class MainActivity extends AppCompatActivity {
         boolean switchType = sharedPrefences.getBoolean("switch",true);
         SharedPreferences sharedPref = getSharedPreferences("FileName",MODE_PRIVATE);
         notitype=sharedPref.getString("spinner","All News");
-
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+notitype);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
-        System.out.println("NOTIFICATIONTYPE is "+switchType);
+        notitype=sharedPref.getString("spinner","All News");
+        if(!switchType){
+            notitype="off";
+        }
 
         if (!calledAlready){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
@@ -96,11 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     news n=snapshot.getValue(news.class);
-
-
-
-
-                    if(switchType){
                         if(notitype.equals("All News")){
                             notification(n.getTitle(),n.getDescription());
                         }else if(notitype.equals("Sports")){
@@ -123,8 +123,18 @@ public class MainActivity extends AppCompatActivity {
                                 notification(n.getTitle(),n.getDescription());
                             }
                         }
-                        else if(notitype.equals("Finance")){
-                            if(n.getCategory().equals("Finance")){
+                        else if(notitype.equals("Politics")){
+                            if(n.getCategory().equals("Politics")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
+                        }
+                        else if(notitype.equals("Economics")){
+                            if(n.getCategory().equals("Economics")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
+                        }
+                        else if(notitype.equals("Health")){
+                            if(n.getCategory().equals("Health")){
                                 notification(n.getTitle(),n.getDescription());
                             }
                         }
@@ -133,8 +143,6 @@ public class MainActivity extends AppCompatActivity {
                                 notification(n.getTitle(),n.getDescription());
                             }
                         }
-
-                    }
 
 
                 }
@@ -250,12 +258,7 @@ String temp = s.toString();
         }
 
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        invalidateOptionsMenu();
 
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

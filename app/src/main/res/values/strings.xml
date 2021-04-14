@@ -11,8 +11,10 @@
         <item>Breaking News</item>
         <item>Local</item>
         <item>Global</item>
-        <item>Finance</item>
-        <item>Sport</item>
+        <item>Politics</item>
+        <item>Economics</item>
+        <item>Health</item>
+        <item>Sports</item>
         <item>Technology</item>
     </string-array>
     <string name="title_activity_admin">Admin</string>
