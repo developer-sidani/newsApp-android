@@ -80,18 +80,41 @@ public class MainActivity extends AppCompatActivity {
         ref = database.getReference("news");
 
         adapter = new ListAdapter(MainActivity.this, newsList);
+        ref.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                notification("Title","Text");
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                notification("Title","Text");
                     newsList.clear();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
                     if (n.isactive) {
-
                         newsList.add(0, n);
-
                         adapter = new ListAdapter(MainActivity.this, newsList);
                         newsListView.setAdapter(adapter);
                     }
@@ -128,7 +151,7 @@ String temp = s.toString();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
                     if(n.isactive) {
-                        if (n.title.indexOf(temp) >= 0 || n.description.indexOf(temp) >= 0) {
+                        if (n.title.indexOf(temp) >= 0 || n.description.indexOf(temp) >= 0 || n.keyword.indexOf(temp)>0) {
 
                             newsList.add(0, n);
                             adapter = new ListAdapter(MainActivity.this, newsList);
