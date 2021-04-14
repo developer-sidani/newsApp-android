@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    String notitype="All News";
+    String notitype="off";
     private FirebaseAuth mAuth;
     private static final String TAG = "MainActivity";
     ListView newsListView;

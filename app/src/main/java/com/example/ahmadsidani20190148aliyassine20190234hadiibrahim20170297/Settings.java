@@ -59,7 +59,11 @@ public class Settings extends AppCompatActivity {
                 }else{
                     mylin.setVisibility(View.INVISIBLE);
                 }
-                Toast.makeText(Settings.this, "NOTIFICATION IS "+isChecked, Toast.LENGTH_SHORT).show();
+                if(isChecked){
+                    Toast.makeText(Settings.this, "NOTIFICATION ARE ENABLED", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(Settings.this, "NOTIFICATION ARE DISABLED", Toast.LENGTH_SHORT).show();
+                }
                 SharedPreferences settings = getSharedPreferences("News",MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean("switch", isChecked);
