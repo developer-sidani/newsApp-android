@@ -1,6 +1,9 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -8,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,8 +19,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
 import java.text.SimpleDateFormat;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -154,6 +162,32 @@ public class Admin extends AppCompatActivity {
 
                         news c = new news(maxid+1, s_spinner, s_title, s_description,s_keywords,currentDateTime, admin);
                         ref.child(String.valueOf(maxid+1)).setValue(c);
+                        ref.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+//                                notification(s_title,s_description);
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
@@ -198,7 +232,27 @@ public class Admin extends AppCompatActivity {
 
     }
 
+//    private void notification(String title,String text){
+//        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+//            NotificationChannel channel=new NotificationChannel("news","news", NotificationManager.IMPORTANCE_DEFAULT);
+//
+//
+//            NotificationManager manager =getSystemService(NotificationManager.class);
+//            manager.createNotificationChannel(channel);
+//
+//        }
+//
+//        NotificationCompat.Builder builder=new NotificationCompat.Builder(this,"news")
+//                .setContentTitle("hello")
+//                .setSmallIcon(R.drawable.ic_notification)
+//                .setAutoCancel(true)
+//                .setContentText("test");
+//
+//        NotificationManagerCompat managerCompat =NotificationManagerCompat.from(this);
+//        managerCompat.notify(999,builder.build());
+//    }
 
 
-    }
+
+}
 

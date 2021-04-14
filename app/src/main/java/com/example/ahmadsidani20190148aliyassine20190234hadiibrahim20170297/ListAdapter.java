@@ -1,6 +1,7 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,10 +23,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ListAdapter extends ArrayAdapter  {
+    private DatabaseReference mDatabase;
     private Activity Context;
 
     FirebaseDatabase firebase;
@@ -58,9 +64,6 @@ public class ListAdapter extends ArrayAdapter  {
         descriptionTextView.setText(n.getDescription());
         numOfLikes.setText(String.valueOf(n.getLikes()));
 
-
-
-
         LinearLayout app_layer = (LinearLayout) row.findViewById(R.id.layout);
         app_layer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,8 +82,6 @@ public class ListAdapter extends ArrayAdapter  {
 //
 //                shownews myObj = new shownews();
 //                myObj.setArguments(bundle);
-
-
             }
 
             private FragmentManager getSupportFragmentManager() {
@@ -121,26 +122,19 @@ public class ListAdapter extends ArrayAdapter  {
         });
 
         like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
                 if(like.isChecked()){
-                   int numLikes=n.getLikes();
-                    int temp=numLikes++;
-                    newssRef.child(tempId).child("likes").setValue(temp);
-
-//                    SharedPreferences Preference = getSharedPreferences("pref", Activity.MODE_PRIVATE);
-//                    SharedPreferences.Editor editor = Preference.edit();
-//                    editor.putBoolean("checkboxstate"+n.getId(), true);
-//                    editor.commit();
+                    like.setButtonDrawable(R.drawable.like_gray);
                 }
                 else{
-                   int numLikes=n.getLikes();
-                    int temp=numLikes--;
-                    newssRef.child(tempId).child("likes").setValue(temp);
+                    like.setButtonDrawable(R.drawable.like_empty);
                 }
 
             }
+
+
 
 
         });

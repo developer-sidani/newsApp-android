@@ -1,11 +1,15 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -13,8 +17,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -77,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                newsList.clear();
+                notification("Title","Text");
+                    newsList.clear();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
                     if (n.isactive) {
@@ -105,14 +113,17 @@ search.addTextChangedListener(new TextWatcher() {
 
     }
 
+
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
 String temp = s.toString();
 
-
         ref.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+
                 newsList.clear();
                 for (DataSnapshot newsSnapshot : dataSnapshot.getChildren()) {
                     news n = newsSnapshot.getValue(news.class);
@@ -120,7 +131,6 @@ String temp = s.toString();
                         if (n.title.indexOf(temp) >= 0 || n.description.indexOf(temp) >= 0) {
 
                             newsList.add(0, n);
-
                             adapter = new ListAdapter(MainActivity.this, newsList);
                             newsListView.setAdapter(adapter);
                         }
@@ -195,6 +205,25 @@ String temp = s.toString();
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void notification(String title,String text){
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+            NotificationChannel channel=new NotificationChannel("news","news", NotificationManager.IMPORTANCE_DEFAULT);
+
+
+            NotificationManager manager =getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(channel);
+
+        }
+
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(this,"news")
+                .setContentTitle(title)
+                .setSmallIcon(R.drawable.ic_news)
+                .setAutoCancel(true)
+                .setContentText(text);
+
+        NotificationManagerCompat managerCompat =NotificationManagerCompat.from(this);
+        managerCompat.notify(999,builder.build());
     }
 
 

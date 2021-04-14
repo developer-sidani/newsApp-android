@@ -48,9 +48,10 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <CheckBox
+                android:buttonTint="@color/red"
                 android:layout_width="25dp"
                 android:layout_height="match_parent"
-                android:button="@drawable/like_gray"
+                android:button="@drawable/like_empty"
                 android:id="@+id/like"
                 />
             <TextView
