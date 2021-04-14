@@ -3,6 +3,7 @@ package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,6 +58,24 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPrefences = getSharedPreferences("News", MODE_PRIVATE);
+        boolean switchType = sharedPrefences.getBoolean("switch",true);
+        SharedPreferences sharedPref = getSharedPreferences("FileName",MODE_PRIVATE);
+        notitype=sharedPref.getString("spinner","All News");
+
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+notitype);
+        System.out.println("NOTIFICATIONTYPE is "+switchType);
+        System.out.println("NOTIFICATIONTYPE is "+switchType);
+        System.out.println("NOTIFICATIONTYPE is "+switchType);
+        System.out.println("NOTIFICATIONTYPE is "+switchType);
+        System.out.println("NOTIFICATIONTYPE is "+switchType);
+
         if (!calledAlready){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
@@ -77,38 +96,46 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     news n=snapshot.getValue(news.class);
-                    if(notitype.equals("All News")){
-                        notification(n.getTitle(),n.getDescription());
-                    }else if(notitype.equals("Sports")){
-                        if(n.getCategory().equals("Sports")){
+
+
+
+
+                    if(switchType){
+                        if(notitype.equals("All News")){
                             notification(n.getTitle(),n.getDescription());
+                        }else if(notitype.equals("Sports")){
+                            if(n.getCategory().equals("Sports")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
                         }
-                    }
-                    else if(notitype.equals("Breaking News")){
-                        if(n.getCategory().equals("Breaking News")){
-                            notification(n.getTitle(),n.getDescription());
+                        else if(notitype.equals("Breaking News")){
+                            if(n.getCategory().equals("Breaking News")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
                         }
-                    }
-                    else if(notitype.equals("Local")){
-                        if(n.getCategory().equals("Local")){
-                            notification(n.getTitle(),n.getDescription());
+                        else if(notitype.equals("Local")){
+                            if(n.getCategory().equals("Local")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
                         }
-                    }
-                    else if(notitype.equals("Global")){
-                        if(n.getCategory().equals("Global")){
-                            notification(n.getTitle(),n.getDescription());
+                        else if(notitype.equals("Global")){
+                            if(n.getCategory().equals("Global")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
                         }
-                    }
-                    else if(notitype.equals("Finance")){
-                        if(n.getCategory().equals("Finance")){
-                            notification(n.getTitle(),n.getDescription());
+                        else if(notitype.equals("Finance")){
+                            if(n.getCategory().equals("Finance")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
                         }
-                    }
-                    else if(notitype.equals("Technology")){
-                        if(n.getCategory().equals("Technology")){
-                            notification(n.getTitle(),n.getDescription());
+                        else if(notitype.equals("Technology")){
+                            if(n.getCategory().equals("Technology")){
+                                notification(n.getTitle(),n.getDescription());
+                            }
                         }
+
                     }
+
 
                 }
 
