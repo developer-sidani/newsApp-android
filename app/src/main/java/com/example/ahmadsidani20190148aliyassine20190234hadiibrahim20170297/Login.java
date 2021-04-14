@@ -104,7 +104,7 @@ public class Login extends AppCompatActivity {
                                             @Override
                                             public void run() {
                                                 try {
-                                                    Thread.sleep(3000);
+                                                    Thread.sleep(1000);
                                                 } catch (InterruptedException e) {
                                                     e.printStackTrace();
                                                 }
@@ -127,6 +127,7 @@ public class Login extends AppCompatActivity {
                                     } else {
                                         // If sign in fails, display a message to the user.
                                         Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                        signin.setEnabled(true);
                                         Snackbar.make(v, "Incorrect Email or Password!!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                                         updateUI(null);
                                     }

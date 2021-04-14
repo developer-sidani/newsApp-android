@@ -65,35 +65,39 @@ public class Forgotpassword extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Email sent.");
+                                Snackbar.make(v, "Please Check your Email!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                                Intent intent =new Intent(getApplication(),Login.class);
+                                HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
+                                handlerThread.start();
+                                Handler handler = new Handler(handlerThread.getLooper());
+                                Handler mainHandler = new Handler(Forgotpassword.this.getMainLooper());
+                                Runnable runnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(3000);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                        mainHandler.post(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                startActivity(intent);
+                                                finish();
+
+                                            }
+                                        });
+                                        handler.getLooper().quit();
+                                    }
+                                };
+                                handler.post(runnable);
+                            }else{
+                                Snackbar.make(v, "Incorrect Email!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
                             }
                         }
                     });
-            Snackbar.make(v, "Please Check your Email!", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            Intent intent =new Intent(this,Login.class);
-            HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
-            handlerThread.start();
-            Handler handler = new Handler(handlerThread.getLooper());
-            Handler mainHandler = new Handler(Forgotpassword.this.getMainLooper());
-            Runnable runnable = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    mainHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            startActivity(intent);
-                            finish();
 
-                        }
-                    });
-                    handler.getLooper().quit();
-                }
-            };
-            handler.post(runnable);
+
 
         }
     }
