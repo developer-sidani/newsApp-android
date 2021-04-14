@@ -33,14 +33,51 @@
             android:layout_margin="5dp"
             android:textSize="15dp"
             android:id="@+id/descriptionTextView"/>
-
         <TextView
             android:id="@+id/dateTextView"
             android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="date"
+            android:layout_gravity="end"/>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="6dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="180dp"
-            android:layout_weight="1"
-            android:text="date" />
+            android:orientation="horizontal">
+            <CheckBox
+                android:layout_width="25dp"
+                android:layout_height="match_parent"
+                android:button="@drawable/like_gray"
+                android:id="@+id/like"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="20dp"
+                android:id="@+id/numOfLikes"
+                android:layout_gravity="end"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="end">
+                <CheckBox
+                    android:layout_width="25dp"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/delete_red"
+                    android:buttonTint="@color/red"
+                    android:id="@+id/delete"
+
+                     />
+
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 

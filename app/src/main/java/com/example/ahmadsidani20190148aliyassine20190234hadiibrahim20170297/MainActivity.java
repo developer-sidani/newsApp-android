@@ -21,8 +21,11 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    CheckBox delete;
     private static final String TAG = "MainActivity";
     ListView newsListView;
     List<news> newsList;
@@ -48,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
             calledAlready = true;
         }
+
+
+
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -120,6 +128,7 @@ String temp = s.toString();
                 }
             }
 
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
@@ -134,6 +143,8 @@ String temp = s.toString();
 
     }
 });
+
+
     }
 
     @Override

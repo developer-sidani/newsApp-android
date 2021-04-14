@@ -6,11 +6,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -33,11 +41,39 @@ public class ListAdapter extends ArrayAdapter  {
         TextView descriptionTextView=row.findViewById(R.id.descriptionTextView);
         TextView dateTextView=row.findViewById(R.id.dateTextView);
         ImageView newsImage= row.findViewById(R.id.newsImage);
+        CheckBox delete=row.findViewById(R.id.delete);
+        CheckBox like=row.findViewById(R.id.like);
+        TextView numOfLikes=row.findViewById(R.id.numOfLikes);
 
         news n=newsList.get(position);
         titleTextView.setText(n.getTitle());
         dateTextView.setText(n.getDate());
         descriptionTextView.setText(n.getDescription());
+        numOfLikes.setText(String.valueOf(n.getLikes()));
+
+        DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
+        String tempId=String.valueOf(n.getId());
+
+
+        delete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                newssRef.child(tempId).child("isactive").setValue(false);
+            }
+        });
+//        like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+////                int numLikes=n.getLikes();
+////                if(like.isChecked()){
+////                    newssRef.child(tempId).child("likes").setValue(numLikes++);
+////                }
+////                else{
+////                    newssRef.child(tempId).child("likes").setValue(numLikes--);
+////                }
+//
+//            }
+//        });
 
 
         if(n.getCategory().equals("Breaking News")){
