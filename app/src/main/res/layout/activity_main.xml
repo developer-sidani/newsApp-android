@@ -36,6 +36,7 @@
         android:gravity="start"
         android:padding="10dip"
         android:id="@+id/search"
+        android:drawableTint="@color/red"
         android:background="@drawable/search"
         android:drawableLeft="@drawable/ic_search"
         />
