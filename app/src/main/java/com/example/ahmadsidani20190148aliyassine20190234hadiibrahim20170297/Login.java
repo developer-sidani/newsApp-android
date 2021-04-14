@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity {
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (email.getText().toString().equals("")) {
                     w1.setText("Empty Field!!!");
                 } else {
@@ -78,6 +79,7 @@ public class Login extends AppCompatActivity {
 
 
                 if(w1.getText().toString().equals("")&&w2.getText().toString().equals("")&&!password.getText().toString().equals("")) {
+                    signin.setEnabled(false);
                     // Good To Go now we need to authenticate
                     mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString())
                             .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
@@ -109,10 +111,11 @@ public class Login extends AppCompatActivity {
                                                 mainHandler.post(new Runnable() {
                                                     @Override
                                                     public void run() {
+                                                        startActivity(intent);
                                                         Toast.makeText(Login.this, "Logged In Successfully", Toast.LENGTH_SHORT).show();
                                                         invalidateOptionsMenu();
                                                         finish();
-
+                                                        signin.setEnabled(true);
 
                                                     }
                                                 });

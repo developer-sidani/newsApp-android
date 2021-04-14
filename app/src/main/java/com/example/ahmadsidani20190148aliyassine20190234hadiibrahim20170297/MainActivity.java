@@ -85,49 +85,50 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                     news n=snapshot.getValue(news.class);
-                        if(notitype.equals("All News")){
-                            notification(n.getTitle(),n.getDescription());
-                        }else if(notitype.equals("Sports")){
-                            if(n.getCategory().equals("Sports")){
+                        if(n.isactive){
+                            if(notitype.equals("All News")){
                                 notification(n.getTitle(),n.getDescription());
+                            }else if(notitype.equals("Sports")){
+                                if(n.getCategory().equals("Sports")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Breaking News")){
+                                if(n.getCategory().equals("Breaking News")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Local")){
+                                if(n.getCategory().equals("Local")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Global")){
+                                if(n.getCategory().equals("Global")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Politics")){
+                                if(n.getCategory().equals("Politics")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Economics")){
+                                if(n.getCategory().equals("Economics")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Health")){
+                                if(n.getCategory().equals("Health")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
+                            }
+                            else if(notitype.equals("Technology")){
+                                if(n.getCategory().equals("Technology")){
+                                    notification(n.getTitle(),n.getDescription());
+                                }
                             }
                         }
-                        else if(notitype.equals("Breaking News")){
-                            if(n.getCategory().equals("Breaking News")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-                        else if(notitype.equals("Local")){
-                            if(n.getCategory().equals("Local")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-                        else if(notitype.equals("Global")){
-                            if(n.getCategory().equals("Global")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-                        else if(notitype.equals("Politics")){
-                            if(n.getCategory().equals("Politics")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-                        else if(notitype.equals("Economics")){
-                            if(n.getCategory().equals("Economics")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-                        else if(notitype.equals("Health")){
-                            if(n.getCategory().equals("Health")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-                        else if(notitype.equals("Technology")){
-                            if(n.getCategory().equals("Technology")){
-                                notification(n.getTitle(),n.getDescription());
-                            }
-                        }
-
 
                 }
 
