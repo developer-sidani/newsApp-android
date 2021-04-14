@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -65,6 +66,7 @@ public class ListAdapter extends ArrayAdapter  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 newssRef.child(tempId).child("isactive").setValue(false);
+                Toast.makeText(Context, "Deleted Successfully", Toast.LENGTH_SHORT).show();
             }
         });
 
