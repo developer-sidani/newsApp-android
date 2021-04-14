@@ -1,11 +1,6 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,33 +8,20 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ServerValue;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.TimeoutException;
 
 public class ListAdapter extends ArrayAdapter  {
-    private DatabaseReference mDatabase;
     private Activity Context;
     TextView numOfLikes;
-
-    FirebaseDatabase firebase;
     private FirebaseAuth mAuth;
 
     List<news>  newsList;
@@ -70,33 +52,6 @@ public class ListAdapter extends ArrayAdapter  {
         descriptionTextView.setText(n.getDescription());
         numOfLikes.setText(String.valueOf(n.getLikes()));
 
-        LinearLayout app_layer = (LinearLayout) row.findViewById(R.id.layout);
-        app_layer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-//                shownews f1=new shownews();
-//                FragmentManager manager = getSupportFragmentManager( );
-//                FragmentTransaction transaction = manager.beginTransaction( );
-//                transaction.replace(R.id.newsListView,f1); //fragment
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("title", n.getTitle());
-//                bundle.putString("description", n.getDescription());
-//                bundle.putString("image", n.getTitle());
-//
-//                shownews myObj = new shownews();
-//                myObj.setArguments(bundle);
-            }
-
-            private FragmentManager getSupportFragmentManager() {
-                return null;
-            }
-
-
-        });
-
 
 
 
@@ -110,7 +65,6 @@ public class ListAdapter extends ArrayAdapter  {
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        // Inflate the menu; this adds items to the action bar if it is present.
         if(currentUser != null){
             delete.setVisibility(View.VISIBLE);
         }else{
@@ -133,31 +87,11 @@ public class ListAdapter extends ArrayAdapter  {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(like.isChecked()){
                     like.setButtonDrawable(R.drawable.like_gray);
-                    new java.util.Timer().schedule(
-                            new java.util.TimerTask() {
-                                @Override
-                                public void run() {
-                                    newssRef.child(tempId).child("likes").setValue(ServerValue.increment(1));
-                                }
-                            },
-                            2000
-                    );
-                    like.setChecked(false);
-
-
+                    numOfLikes.setText(String.valueOf(Integer.parseInt(numOfLikes.getText().toString())+1));
                 }
                 else{
                     like.setButtonDrawable(R.drawable.like_empty);
-                    new java.util.Timer().schedule(
-                            new java.util.TimerTask() {
-                                @Override
-                                public void run() {
-                                    newssRef.child(tempId).child("likes").setValue(ServerValue.increment(-1));
-                                }
-                            },
-                            2000
-                    );
-                    like.setChecked(true);
+                    numOfLikes.setText(String.valueOf(Integer.parseInt(numOfLikes.getText().toString())-1));
                 }
             }
         });

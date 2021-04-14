@@ -1,10 +1,6 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class news {
 

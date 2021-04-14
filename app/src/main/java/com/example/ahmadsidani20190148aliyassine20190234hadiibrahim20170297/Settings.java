@@ -1,27 +1,13 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
-import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.preference.PreferenceManager;
 import android.view.View;
-import android.widget.AbsSpinner;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -75,7 +61,6 @@ public class Settings extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences("FileName",MODE_PRIVATE);
         int spinnerValue = sharedPref.getInt("userChoiceSpinner",-1);
         if(spinnerValue != -1) {
-            // set the selected value of the spinner
             selection_spinner.setSelection(spinnerValue);
         }
         String s=sharedPref.getString("spinner","All News");
