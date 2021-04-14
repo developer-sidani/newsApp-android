@@ -184,7 +184,10 @@ String temp = s.toString();
         }
         else if(id==R.id.action_logout){
             FirebaseAuth.getInstance().signOut();
-            invalidateOptionsMenu();
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+
             Toast.makeText(this, "Logged Out Successfully", Toast.LENGTH_SHORT).show();
         }else if(id==R.id.action_addnews){
             Intent intent =new Intent(this,Admin.class);
