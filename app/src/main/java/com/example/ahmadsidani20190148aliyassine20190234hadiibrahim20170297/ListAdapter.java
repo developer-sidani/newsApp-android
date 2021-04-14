@@ -43,6 +43,7 @@ public class ListAdapter extends ArrayAdapter  {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        mAuth = FirebaseAuth.getInstance();
         LayoutInflater inflater=Context.getLayoutInflater();
         View row=inflater.inflate(R.layout.row,null,true);
         TextView titleTextView=row.findViewById(R.id.titleTextView);
@@ -62,15 +63,13 @@ public class ListAdapter extends ArrayAdapter  {
         DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
         String tempId=String.valueOf(n.getId());
 
-        mAuth = FirebaseAuth.getInstance();
+
 
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         // Inflate the menu; this adds items to the action bar if it is present.
         if(currentUser != null){
             delete.setVisibility(View.VISIBLE);
-
-
         }else{
             delete.setVisibility(View.INVISIBLE);
 

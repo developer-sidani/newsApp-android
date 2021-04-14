@@ -134,6 +134,7 @@ public class Admin extends AppCompatActivity {
 
             }
         });
+        Intent intent = new Intent(this,MainActivity.class);
 
         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
         handlerThread.start();
@@ -157,8 +158,8 @@ public class Admin extends AppCompatActivity {
                         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
 
-//                        Intent intent = new Intent(getApplication(), MainActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
                         Toast.makeText(getApplication(), "News Added Successfully", Toast.LENGTH_SHORT).show();
                         HandlerThread handlerThread = new HandlerThread("hideTextHandlerThread");
                         handlerThread.start();
@@ -176,6 +177,8 @@ public class Admin extends AppCompatActivity {
                                 mainHandler.post(new Runnable() {
                                     @Override
                                     public void run() {
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
                                         finish();
 
                                     }
@@ -192,7 +195,6 @@ public class Admin extends AppCompatActivity {
             }
         };
         handler.post(runnable);
-
 
     }
 
