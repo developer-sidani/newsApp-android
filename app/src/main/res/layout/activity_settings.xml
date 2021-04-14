@@ -15,7 +15,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Notifications:"
-        android:textColor="@color/purple_500"
         android:textSize="32dp" />
     <Space
         android:layout_width="wrap_content"
