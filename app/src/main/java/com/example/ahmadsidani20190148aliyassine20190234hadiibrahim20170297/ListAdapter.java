@@ -2,6 +2,8 @@ package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.Preference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,7 +28,10 @@ import java.util.List;
 
 public class ListAdapter extends ArrayAdapter  {
     private Activity Context;
-    public  int numLikes;
+
+    FirebaseDatabase firebase;
+    private FirebaseAuth mAuth;
+
     List<news>  newsList;
     public ListAdapter(Activity Context,List<news>  newsList){
         super(Context,R.layout.row,newsList);
@@ -55,6 +62,21 @@ public class ListAdapter extends ArrayAdapter  {
         DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
         String tempId=String.valueOf(n.getId());
 
+        mAuth = FirebaseAuth.getInstance();
+
+
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        // Inflate the menu; this adds items to the action bar if it is present.
+        if(currentUser != null){
+            delete.setVisibility(View.VISIBLE);
+
+
+        }else{
+            delete.setVisibility(View.INVISIBLE);
+
+        }
+
+
 
         delete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -62,21 +84,30 @@ public class ListAdapter extends ArrayAdapter  {
                 newssRef.child(tempId).child("isactive").setValue(false);
             }
         });
-         numLikes=n.getLikes();
+
         like.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if(like.isChecked()){
+                   int numLikes=n.getLikes();
                     int temp=numLikes++;
                     newssRef.child(tempId).child("likes").setValue(temp);
+
+//                    SharedPreferences Preference = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+//                    SharedPreferences.Editor editor = Preference.edit();
+//                    editor.putBoolean("checkboxstate"+n.getId(), true);
+//                    editor.commit();
                 }
                 else{
+                   int numLikes=n.getLikes();
                     int temp=numLikes--;
                     newssRef.child(tempId).child("likes").setValue(temp);
                 }
 
             }
+
+
         });
 
 
