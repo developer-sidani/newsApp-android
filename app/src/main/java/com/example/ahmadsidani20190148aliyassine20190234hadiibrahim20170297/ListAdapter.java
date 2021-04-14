@@ -1,6 +1,7 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,19 +52,8 @@ public class ListAdapter extends ArrayAdapter  {
         dateTextView.setText(n.getDate());
         descriptionTextView.setText(n.getDescription());
         numOfLikes.setText(String.valueOf(n.getLikes()));
-
-
-
-
-
-
-
         DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
         String tempId=String.valueOf(n.getId());
-
-
-
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             delete.setVisibility(View.VISIBLE);
@@ -71,9 +61,6 @@ public class ListAdapter extends ArrayAdapter  {
             delete.setVisibility(View.INVISIBLE);
 
         }
-
-
-
         delete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

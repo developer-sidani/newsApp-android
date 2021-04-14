@@ -30,7 +30,7 @@ public class Settings extends AppCompatActivity {
         reference=database.getInstance().getReference().child("news");
          mySwitch = (Switch) findViewById(R.id.mySwitch);
         selection_spinner=(Spinner)findViewById(R.id.selection_spinner);
-         SharedPreferences settings = getSharedPreferences("News",MODE_PRIVATE);
+        SharedPreferences settings = getSharedPreferences("News",MODE_PRIVATE);
         boolean silent = settings.getBoolean("switch", true);
         mySwitch.setChecked(silent);
 
