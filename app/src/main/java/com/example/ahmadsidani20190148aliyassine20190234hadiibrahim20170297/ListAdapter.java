@@ -1,9 +1,7 @@
 package com.example.ahmadsidani20190148aliyassine20190234hadiibrahim20170297;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.Preference;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +9,18 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -58,6 +56,44 @@ public class ListAdapter extends ArrayAdapter  {
         dateTextView.setText(n.getDate());
         descriptionTextView.setText(n.getDescription());
         numOfLikes.setText(String.valueOf(n.getLikes()));
+
+
+
+
+        LinearLayout app_layer = (LinearLayout) row.findViewById(R.id.layout);
+        app_layer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                shownews f1=new shownews();
+//                FragmentManager manager = getSupportFragmentManager( );
+//                FragmentTransaction transaction = manager.beginTransaction( );
+//                transaction.replace(R.id.newsListView,f1); //fragment
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("title", n.getTitle());
+//                bundle.putString("description", n.getDescription());
+//                bundle.putString("image", n.getTitle());
+//
+//                shownews myObj = new shownews();
+//                myObj.setArguments(bundle);
+
+
+            }
+
+            private FragmentManager getSupportFragmentManager() {
+                return null;
+            }
+
+
+        });
+
+
+
+
+
+
 
         DatabaseReference newssRef = FirebaseDatabase.getInstance().getReference("news");
         String tempId=String.valueOf(n.getId());
